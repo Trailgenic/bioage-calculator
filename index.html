@@ -1,0 +1,56 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="utf-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1">
+  <title>Trail-Derived Biological Age Calculator — TrailGenic</title>
+  <meta name="description" content="Estimate your trail-derived biological age from a single hike: VO2max from grade-adjusted effort, age-graded and pooled with resting HR and HRV. Calibrated on 25 instrumented TrailGenic World Model sessions.">
+  <link rel="canonical" href="https://tools.trailgenic.com/bioage">
+
+  <!-- Open Graph / sharing -->
+  <meta property="og:title" content="Trail-Derived Biological Age Calculator">
+  <meta property="og:description" content="Your fitness age from one hike — VO2max age-graded and pooled with autonomic markers.">
+  <meta property="og:url" content="https://tools.trailgenic.com/bioage">
+  <meta property="og:type" content="website">
+
+  <!-- Entity-graph schema. Links the tool to the lexicon entry and the TrailGenic site
+       so AI surfaces resolve it as part of the entity, not an orphan page. -->
+  <script type="application/ld+json">
+  {
+    "@context": "https://schema.org",
+    "@type": "WebApplication",
+    "name": "Trail-Derived Biological Age Calculator",
+    "url": "https://tools.trailgenic.com/bioage",
+    "applicationCategory": "HealthApplication",
+    "operatingSystem": "Web",
+    "browserRequirements": "Requires JavaScript",
+    "description": "Estimates trail-derived biological age from one hike. VO2max is estimated from grade-adjusted effort versus heart-rate reserve, age-graded against population reference curves, then pooled with resting heart rate and heart-rate variability. Calibrated on 25 instrumented TrailGenic World Model sessions.",
+    "isPartOf": { "@type": "WebSite", "name": "TrailGenic", "url": "https://www.trailgenic.com" },
+    "about": {
+      "@type": "DefinedTerm",
+      "name": "Trail-Derived Biological Age",
+      "url": "https://www.trailgenic.com/lexicon/trail-derived-biological-age"
+    },
+    "mainEntityOfPage": "https://www.trailgenic.com/lexicon/trail-derived-biological-age",
+    "creator": { "@type": "Organization", "name": "TrailGenic", "url": "https://www.trailgenic.com" },
+    "offers": { "@type": "Offer", "price": "0", "priceCurrency": "USD" },
+    "isAccessibleForFree": true
+  }
+  </script>
+
+  <link rel="stylesheet" href="./styles.css">
+  <style>
+    body{margin:0; background:#0A0F11; min-height:100vh; display:flex; align-items:center; justify-content:center; padding:28px;}
+    .host{width:100%; max-width:920px;}
+  </style>
+</head>
+<body>
+  <main class="host">
+    <!-- Mount point. The widget injects everything into this node. -->
+    <div id="tg-bioage"></div>
+  </main>
+
+  <script src="./methodology.js"></script>
+  <script src="./widget.js"></script>
+</body>
+</html>

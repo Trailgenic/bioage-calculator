@@ -1,0 +1,122 @@
+/* TrailGenic — Trail-Derived Biological Age — styles.css
+   Scoped under #tg-bioage so it is safe to drop into Webflow without leaking. */
+@import url('https://fonts.googleapis.com/css2?family=Archivo:wght@500;600;800;900&family=Inter:wght@400;500;600&family=JetBrains+Mono:wght@500;700&display=swap');
+
+#tg-bioage{
+  --granite:#0E1417; --granite-2:#141E22; --panel:#18242A; --line:#26363D;
+  --glacial:#6FE0D6; --glacial-dim:#3C7E7C; --summit:#F0BE63; --summit-dim:#8a6f3e;
+  --bone:#EAF0EE; --ash:#8FA3A8; --ash-dim:#5C7077; --bad:#E2785B;
+  --display:'Archivo',sans-serif; --body:'Inter',sans-serif; --mono:'JetBrains Mono',monospace;
+  all:initial; display:block; font-family:var(--body); color:var(--bone);
+  background:var(--granite); border:1px solid var(--line); border-radius:14px;
+  overflow:hidden; box-sizing:border-box; line-height:1.45; -webkit-font-smoothing:antialiased;
+}
+#tg-bioage *,#tg-bioage *::before,#tg-bioage *::after{box-sizing:border-box;}
+#tg-bioage .wrap{display:grid; grid-template-columns:minmax(0,0.92fr) minmax(0,1.08fr); min-height:560px;}
+@media(max-width:720px){#tg-bioage .wrap{grid-template-columns:1fr;}}
+
+#tg-bioage .hd{grid-column:1/-1; display:flex; align-items:baseline; gap:14px;
+  padding:22px 26px 18px; border-bottom:1px solid var(--line);
+  background:linear-gradient(180deg,var(--granite-2),var(--granite));}
+#tg-bioage .hd .eyebrow{font-family:var(--mono); font-size:10.5px; letter-spacing:.22em;
+  text-transform:uppercase; color:var(--glacial-dim);}
+#tg-bioage .hd h1{font-family:var(--display); font-weight:900; font-size:22px; margin:0;
+  letter-spacing:-.01em; color:var(--bone);}
+#tg-bioage .hd h1 b{color:var(--glacial); font-weight:900;}
+#tg-bioage .hd .tag{margin-left:auto; font-family:var(--mono); font-size:10px;
+  color:var(--ash-dim); letter-spacing:.1em; white-space:nowrap;}
+
+#tg-bioage .console{padding:22px 26px; border-right:1px solid var(--line);}
+@media(max-width:720px){#tg-bioage .console{border-right:none; border-bottom:1px solid var(--line);}}
+#tg-bioage .grp{margin-bottom:18px;}
+#tg-bioage .grp-lbl{font-family:var(--mono); font-size:10px; letter-spacing:.18em;
+  text-transform:uppercase; color:var(--ash-dim); margin:0 0 9px; display:flex; gap:8px; align-items:center;}
+#tg-bioage .grp-lbl::after{content:""; flex:1; height:1px; background:var(--line);}
+#tg-bioage .row{display:grid; grid-template-columns:1fr 1fr; gap:10px;}
+#tg-bioage .field label{display:block; font-size:11px; color:var(--ash); margin:0 0 4px; font-weight:500;}
+#tg-bioage .ipt{position:relative; display:flex; align-items:center;
+  background:var(--granite-2); border:1px solid var(--line); border-radius:8px;
+  transition:border-color .15s, box-shadow .15s;}
+#tg-bioage .ipt:focus-within{border-color:var(--glacial-dim); box-shadow:0 0 0 3px rgba(111,224,214,.1);}
+#tg-bioage .ipt input{all:unset; width:100%; padding:9px 10px; font-family:var(--mono);
+  font-weight:500; font-size:14px; color:var(--bone); -moz-appearance:textfield;}
+#tg-bioage .ipt input::-webkit-outer-spin-button,
+#tg-bioage .ipt input::-webkit-inner-spin-button{-webkit-appearance:none;}
+#tg-bioage .ipt .unit{font-family:var(--mono); font-size:10px; color:var(--ash-dim);
+  padding-right:10px; letter-spacing:.04em; white-space:nowrap;}
+
+#tg-bioage .adv-toggle{font-family:var(--mono); font-size:10px; letter-spacing:.1em;
+  color:var(--glacial-dim); background:none; border:none; cursor:pointer; padding:2px 0;
+  text-transform:uppercase; display:flex; align-items:center; gap:6px;}
+#tg-bioage .adv-toggle:hover{color:var(--glacial);}
+#tg-bioage .adv-toggle span{transition:transform .2s;}
+#tg-bioage .adv-toggle.open span{transform:rotate(90deg);}
+#tg-bioage .adv{display:none; margin-top:12px;}
+#tg-bioage .adv.open{display:block;}
+
+#tg-bioage .fasted{display:flex; align-items:center; gap:9px; margin-top:6px; cursor:pointer; user-select:none;}
+#tg-bioage .fasted .box{width:16px; height:16px; border:1px solid var(--glacial-dim); border-radius:4px;
+  display:grid; place-items:center; transition:background .15s;}
+#tg-bioage .fasted.on .box{background:var(--glacial-dim);}
+#tg-bioage .fasted .box svg{opacity:0; transition:opacity .15s;}
+#tg-bioage .fasted.on .box svg{opacity:1;}
+#tg-bioage .fasted span{font-size:11px; color:var(--ash);}
+
+#tg-bioage .read{width:100%; margin-top:6px; padding:13px; cursor:pointer;
+  font-family:var(--display); font-weight:800; font-size:13px; letter-spacing:.08em;
+  text-transform:uppercase; color:var(--granite); background:var(--glacial); border:none; border-radius:9px;
+  transition:filter .15s, transform .05s;}
+#tg-bioage .read:hover{filter:brightness(1.08);}
+#tg-bioage .read:active{transform:translateY(1px);}
+#tg-bioage .read:focus-visible{outline:2px solid var(--summit); outline-offset:2px;}
+#tg-bioage .err{color:var(--bad); font-size:11px; margin-top:8px; min-height:14px; font-family:var(--mono);}
+#tg-bioage .warn{color:var(--summit); font-size:11px; margin-top:8px; font-family:var(--mono); line-height:1.5;}
+
+#tg-bioage .result{padding:22px 26px; display:flex; flex-direction:column; gap:16px; background:var(--granite);}
+#tg-bioage .ridge-wrap{position:relative; background:var(--granite-2); border:1px solid var(--line);
+  border-radius:11px; padding:16px 16px 8px;}
+#tg-bioage .ridge-cap{display:flex; justify-content:space-between; align-items:baseline; margin-bottom:4px;}
+#tg-bioage .ridge-cap .l{font-family:var(--mono); font-size:9.5px; letter-spacing:.16em;
+  text-transform:uppercase; color:var(--ash-dim);}
+#tg-bioage svg.ridge{width:100%; height:138px; display:block;}
+#tg-bioage .bigout{display:flex; align-items:flex-end; gap:14px; padding:2px 2px 0;}
+#tg-bioage .bigout .num{font-family:var(--display); font-weight:900; font-size:54px; line-height:.86;
+  color:var(--summit); letter-spacing:-.02em; font-variant-numeric:tabular-nums;}
+#tg-bioage .bigout .meta{padding-bottom:5px;}
+#tg-bioage .bigout .meta .k{font-family:var(--mono); font-size:10px; letter-spacing:.14em;
+  text-transform:uppercase; color:var(--ash-dim);}
+#tg-bioage .bigout .meta .v{font-size:12.5px; color:var(--ash); margin-top:2px;}
+#tg-bioage .bigout .meta .v b{color:var(--bone); font-weight:600;}
+#tg-bioage .delta{margin-left:auto; text-align:right; padding-bottom:5px;}
+#tg-bioage .delta .d{font-family:var(--display); font-weight:800; font-size:20px; color:var(--glacial);
+  font-variant-numeric:tabular-nums;}
+#tg-bioage .delta .dl{font-family:var(--mono); font-size:9px; letter-spacing:.1em;
+  text-transform:uppercase; color:var(--ash-dim);}
+
+#tg-bioage .comps{display:flex; flex-direction:column; gap:11px;}
+#tg-bioage .comp .top{display:flex; justify-content:space-between; align-items:baseline; margin-bottom:5px;}
+#tg-bioage .comp .name{font-size:11.5px; color:var(--bone); font-weight:600;}
+#tg-bioage .comp .name em{font-style:normal; color:var(--ash-dim); font-family:var(--mono);
+  font-size:9.5px; letter-spacing:.08em; margin-left:6px;}
+#tg-bioage .comp .val{font-family:var(--mono); font-size:12px; color:var(--glacial); font-weight:700;}
+#tg-bioage .comp .val .u{color:var(--ash-dim); font-weight:500; font-size:9.5px;}
+#tg-bioage .track{height:6px; background:var(--granite-2); border:1px solid var(--line);
+  border-radius:99px; overflow:hidden; position:relative;}
+#tg-bioage .track .fill{height:100%; width:0; border-radius:99px;
+  background:linear-gradient(90deg,var(--glacial-dim),var(--glacial)); transition:width .9s cubic-bezier(.2,.7,.2,1);}
+#tg-bioage .track.muted .fill{background:linear-gradient(90deg,var(--ash-dim),var(--ash));}
+
+#tg-bioage .ctx{font-size:12px; color:var(--ash); line-height:1.55; padding:13px 15px;
+  background:var(--granite-2); border:1px solid var(--line); border-left:2px solid var(--glacial-dim);
+  border-radius:0 8px 8px 0;}
+#tg-bioage .ctx b{color:var(--bone); font-weight:600;}
+#tg-bioage .disc{font-family:var(--mono); font-size:9.5px; line-height:1.6; color:var(--ash-dim); letter-spacing:.01em;}
+#tg-bioage .disc a{color:var(--glacial-dim);}
+#tg-bioage .empty{display:flex; align-items:center; justify-content:center; height:100%;
+  color:var(--ash-dim); font-family:var(--mono); font-size:11px; letter-spacing:.1em; text-align:center;}
+
+#tg-bioage .marker{transition:transform 1s cubic-bezier(.2,.7,.2,1);}
+@media(prefers-reduced-motion:reduce){
+  #tg-bioage .track .fill{transition:none;}
+  #tg-bioage .marker{transition:none !important;}
+}
