@@ -5,12 +5,12 @@
    widget AND to import server-side for the MCP tool (calculate_trail_bioage)
    on the Trailgenic node — that reuse is the reason this is a separate file.
 
-   CALIBRATION PROVENANCE
+   HISTORICAL INTERNAL TUNING — NOT INDEPENDENT VALIDATION
    Anchored to the 25-session World Model dataset (Nov 2025 – Jun 2026).
    - Mechanics VO2max estimator: median 45.4 across recent sessions vs Garmin 46,
      derived independently of the device number.
-   - Pooled bio-age reproduces the published Trailgenic estimate of 32–40
-     against a chronological age of 53, with no constant forced.
+   - Age-like output was internally tuned to reproduce an earlier unvalidated
+     TrailGenic 32–40 figure; this is not independent biological-age validation.
    - Weighting: VO2max 60% (dominant longevity signal) / resting HR 20% / HRV 20%.
      If HRV is absent, weight redistributes to 70% VO2max / 30% resting HR.
    - Autonomic terms (resting HR, HRV) are mapped to age INDEPENDENTLY of
@@ -108,9 +108,9 @@
     if (!e.length) {
       var hrmax = maxHR(I.age, I.maxhr);
       if (pctHRR(I.ahr, I.rhr, hrmax) < 0.50) {
-        warning = 'This reads like a Zone 1 effort (low heart-rate reserve). ' +
-                  'Bio-age needs a sustained climbing effort to reveal aerobic capacity — ' +
-                  'an easy walk will read far older than you are.';
+        warning = 'Historical model limitation: low heart-rate-reserve sessions ' +
+                  'may yield misleading age-like values. No biological-age ' +
+                  'or health outcome can be inferred from this calculation.';
       }
     }
     return { errors: e, warning: warning };

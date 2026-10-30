@@ -53,36 +53,33 @@
     function render(I, R) {
       var chrono = I.age;
       var bandTxt = Math.round(R.lo) + '–' + Math.round(R.hi);
-      var delta = chrono - R.bio;
-      var deltaTxt = (delta >= 0 ? '−' : '+') + Math.abs(delta).toFixed(0);
       var vo2Fill = Math.max(6, Math.min(100, ((R.vo2 - 28) / (58 - 28)) * 100));
       var rhrFill = Math.max(6, Math.min(100, ((72 - I.rhr) / (72 - 44)) * 100));
       var hrvFill = R.hasHrv ? Math.max(6, Math.min(100, ((I.hrv - 18) / (60 - 18)) * 100)) : 0;
 
-      var ctx = 'Your aerobic engine reads <b>VO₂max ≈ ' + R.vo2.toFixed(0) + '</b>, the dominant longevity'
-        + ' signal, placing fitness age near <b>' + R.vo2age.toFixed(0) + '</b>. '
+      var ctx = 'The model estimates VO₂max ≈ <b>' + R.vo2.toFixed(0) + '</b> from this session and converts that estimate to an arbitrary age-like proxy near <b>' + R.vo2age.toFixed(0) + '</b>. This proxy is not a validated age or longevity measurement. '
         + (R.hasHrv
-          ? 'Resting HR and HRV are excellent-for-age rather than elite-youthful, which moderates the pooled estimate upward — the honest result, not the flattering one.'
-          : 'Add overnight HRV under “Refine” to tighten the autonomic side of the estimate.')
+          ? 'Resting HR and HRV change the exploratory composite; no biological age or outcome is validated.'
+          : 'Add overnight HRV under “Refine” as another input to this unvalidated historical composite.')
         + ' This hike sat at <b>' + (R.pctHRR * 100).toFixed(0) + '% heart-rate reserve</b> — '
-        + (R.pctHRR < 0.62 ? 'a true aerobic, fat-oxidation effort.' : 'a moderate aerobic effort.');
+        + (R.pctHRR < 0.62 ? 'a lower estimated heart-rate-reserve effort (substrate use was not measured).' : 'a moderate aerobic effort.');
 
       $('res').innerHTML =
-          '<div class="ridge-wrap"><div class="ridge-cap"><span class="l">Fitness-age ridgeline</span>'
-        + '<span class="l">chrono ' + chrono + ' →</span></div>' + ridgeSVG(chrono, R.lo, R.hi, R.bio) + '</div>'
+          '<div class="ridge-wrap"><div class="ridge-cap"><span class="l">Historical age-like model scale</span>'
+        + '<span class="l">example chronological input ' + chrono + ' →</span></div>' + ridgeSVG(chrono, R.lo, R.hi, R.bio) + '</div>'
         + '<div class="bigout"><div class="num">' + bandTxt + '</div>'
-        + '<div class="meta"><div class="k">Trail-derived bio-age</div>'
-        + '<div class="v">midpoint <b>' + R.bio.toFixed(0) + '</b> · years</div></div>'
-        + '<div class="delta"><div class="d">' + deltaTxt + '</div><div class="dl">vs chronological</div></div></div>'
+        + '<div class="meta"><div class="k">Unvalidated age-like output</div>'
+        + '<div class="v">midpoint <b>' + R.bio.toFixed(0) + '</b> · model units (not biological years)</div></div>'
+        + '<div class="delta"><div class="d">Not validated</div><div class="dl">not age reversal</div></div></div>'
         + '<div class="comps">'
         + bar('Aerobic engine', 'VO₂max', R.vo2.toFixed(0) + ' <span class="u">ml/kg/min</span>', vo2Fill, false)
         + bar('Resting heart rate', 'autonomic', I.rhr + ' <span class="u">bpm</span>', rhrFill, false)
         + (R.hasHrv ? bar('Heart-rate variability', 'autonomic', I.hrv + ' <span class="u">ms</span>', hrvFill, false)
                     : bar('Heart-rate variability', 'not entered', '—', 0, true))
         + '</div><div class="ctx">' + ctx + '</div>'
-        + '<div class="disc">Fitness-based estimate from one session — not a clinical or epigenetic measure. '
+        + '<div class="disc">RETIRED HISTORICAL EXPERIMENT — this output is not measured biological age, clinical validation, disease-risk reduction, age reversal, or lifespan evidence. '
         + 'Pooled from VO₂max (60%) + resting HR and HRV (40%), age-graded against population reference curves. '
-        + 'Single-day inputs carry single-day noise; a rolling read across sessions is the durable signal.</div>';
+        + 'Internal tuning on 25 sessions does not establish independent validation. Do not use this output for health decisions.</div>';
 
       var res = $('res');
       requestAnimationFrame(function () {
@@ -101,7 +98,7 @@
       };
       var v = M.validate(I);
       if (v.errors.length) { $('f-err').textContent = 'Check: ' + v.errors.join(', ') + '.'; return; }
-      if (v.warning) { $('f-err').innerHTML = '<span class="warn">' + v.warning + '</span>'; }
+      if (v.warning) { $('f-err').innerHTML = '<span class="warn">Historical model limitation: low-intensity sessions may produce misleading age-like values. No biological-age conclusion is valid.</span>'; }
       render(I, M.compute(I));
     });
 
@@ -111,8 +108,8 @@
   var TEMPLATE = [
     '<div class="wrap">',
     '<div class="hd"><div><div class="eyebrow">TrailGenic · Personal World Model</div>',
-    '<h1>Trail-Derived <b>Biological Age</b></h1></div>',
-    '<div class="tag">v1.0 · calibrated on 25 sessions</div></div>',
+    '<h1>Historical <b>Age-Like Model</b></h1></div>',
+    '<div class="tag">ILLUSTRATIVE PREFILLED EXAMPLE · historical v1.0 · internally tuned on 25 sessions · unvalidated</div></div>',
     '<div class="console">',
     '<div class="grp"><p class="grp-lbl">You</p><div class="row">',
     '<div class="field"><label>Age</label><div class="ipt"><input id="f-age" type="number" value="53"><span class="unit">yrs</span></div></div>',
@@ -127,12 +124,12 @@
     '<div class="field"><label>Average HR</label><div class="ipt"><input id="f-ahr" type="number" value="122"><span class="unit">bpm</span></div></div></div>',
     '<div class="fasted on" id="f-fasted" role="checkbox" aria-checked="true" tabindex="0">',
     '<span class="box"><svg width="11" height="11" viewBox="0 0 11 11"><path d="M2 5.5L4.3 8L9 2.5" stroke="#0E1417" stroke-width="1.8" fill="none" stroke-linecap="round" stroke-linejoin="round"/></svg></span>',
-    '<span>Fasted hike (TrailGenic protocol)</span></div></div>',
+    '<span>Fasted state (historical input; not a recommendation)</span></div></div>',
     '<button class="adv-toggle" id="adv-btn"><span>▸</span> Refine with known values</button>',
     '<div class="adv" id="adv-panel"><div class="row" style="margin-top:6px;">',
     '<div class="field"><label>Max HR (if known)</label><div class="ipt"><input id="f-maxhr" type="number" placeholder="est."><span class="unit">bpm</span></div></div>',
     '<div class="field"><label>Overnight HRV</label><div class="ipt"><input id="f-hrv" type="number" value="31"><span class="unit">ms</span></div></div></div></div>',
-    '<div style="margin-top:18px;"><button class="read" id="f-read">Read biological age</button><div class="err" id="f-err"></div></div>',
+    '<div style="margin-top:18px;"><button class="read" id="f-read">Explore historical model</button><div class="err" id="f-err"></div></div>',
     '</div>',
     '<div class="result" id="res"><div class="empty">ENTER A HIKE · PRESS READ</div></div>',
     '</div>'
