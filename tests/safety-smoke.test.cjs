@@ -25,8 +25,8 @@ test('the historical widget renders the result and revised warning, without clai
   const container = { innerHTML: '', querySelector(sel) { return node(sel.slice(1)); } };
   function node(id) {
     if (!nodes.has(id)) {
-      const tag = container.innerHTML.match(new RegExp('<input\\b[^>]*\\bid="' + id + '"[^>]*>'))?.[0] || '';
-      const value = tag.match(/\\bvalue="([^"]*)"/)?.[1] || '';
+      const tail = container.innerHTML.split('id="' + id + '"')[1] || '';
+      const tag = tail.split('>')[0]; const value = tag.includes('value="') ? tag.split('value="')[1].split('"')[0] : '';
       const classes = new Set(id === 'f-fasted' ? ['on'] : []);
       const listeners = {};
       nodes.set(id, {
@@ -48,7 +48,7 @@ test('the historical widget renders the result and revised warning, without clai
     console
   };
   vm.runInNewContext(widgetSource, context, { timeout: 3000 });
-  assert.match(container.innerHTML, /Historical <b>Age-Like Model<\\/b>/);
+  assert.ok(container.innerHTML.includes('Historical <b>Age-Like Model</b>'));
   assert.match(container.innerHTML, /ILLUSTRATIVE PREFILLED EXAMPLE/);
   assert.match(node('res').innerHTML, /RETIRED HISTORICAL EXPERIMENT/);
   assert.match(node('res').innerHTML, /not age reversal/);
@@ -60,9 +60,9 @@ test('the historical widget renders the result and revised warning, without clai
 });
 
 test('standalone metadata is unvalidated and structurally valid', () => {
-  const block = indexHtml.match(/<script type="application\\/ld\\+json">([\\s\\S]*?)<\\/script>/);
+  const block = indexHtml.split('<script type="application/ld+json">')[1]?.split('</script>')[0];
   assert.ok(block, 'JSON-LD block');
-  const graph = JSON.parse(block[1]);
+  const graph = JSON.parse(block);
   assert.match(graph.description, /not establish independent clinical validation/);
   assert.match(indexHtml, /Historical Age-Like Model/);
   assert.doesNotMatch(indexHtml, /Your fitness age from one hike/);
