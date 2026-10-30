@@ -53,14 +53,11 @@
     function render(I, R) {
       var chrono = I.age;
       var bandTxt = Math.round(R.lo) + '–' + Math.round(R.hi);
-      var delta = chrono - R.bio;
-      var deltaTxt = (delta >= 0 ? '−' : '+') + Math.abs(delta).toFixed(0);
       var vo2Fill = Math.max(6, Math.min(100, ((R.vo2 - 28) / (58 - 28)) * 100));
       var rhrFill = Math.max(6, Math.min(100, ((72 - I.rhr) / (72 - 44)) * 100));
       var hrvFill = R.hasHrv ? Math.max(6, Math.min(100, ((I.hrv - 18) / (60 - 18)) * 100)) : 0;
 
-      var ctx = 'Your aerobic engine reads <b>VO₂max ≈ ' + R.vo2.toFixed(0) + '</b>, the dominant longevity'
-        + ' signal, producing a historical age-like proxy near <b>' + R.vo2age.toFixed(0) + '</b>. '
+      var ctx = 'The model estimates VO₂max ≈ <b>' + R.vo2.toFixed(0) + '</b> from this session and converts that estimate to an arbitrary age-like proxy near <b>' + R.vo2age.toFixed(0) + '</b>. This proxy is not a validated age or longevity measurement. '
         + (R.hasHrv
           ? 'Resting HR and HRV change the exploratory composite; no biological age or outcome is validated.'
           : 'Add overnight HRV under “Refine” as another input to this unvalidated historical composite.')
@@ -69,7 +66,7 @@
 
       $('res').innerHTML =
           '<div class="ridge-wrap"><div class="ridge-cap"><span class="l">Historical age-like model scale</span>'
-        + '<span class="l">chrono ' + chrono + ' →</span></div>' + ridgeSVG(chrono, R.lo, R.hi, R.bio) + '</div>'
+        + '<span class="l">example chronological input ' + chrono + ' →</span></div>' + ridgeSVG(chrono, R.lo, R.hi, R.bio) + '</div>'
         + '<div class="bigout"><div class="num">' + bandTxt + '</div>'
         + '<div class="meta"><div class="k">Unvalidated age-like output</div>'
         + '<div class="v">midpoint <b>' + R.bio.toFixed(0) + '</b> · model units (not biological years)</div></div>'
@@ -101,7 +98,7 @@
       };
       var v = M.validate(I);
       if (v.errors.length) { $('f-err').textContent = 'Check: ' + v.errors.join(', ') + '.'; return; }
-      if (v.warning) { $('f-err').innerHTML = '<span class="warn">' + v.warning + '</span>'; }
+      if (v.warning) { $('f-err').innerHTML = '<span class="warn">Historical model limitation: low-intensity sessions may produce misleading age-like values. No biological-age conclusion is valid.</span>'; }
       render(I, M.compute(I));
     });
 
@@ -112,7 +109,7 @@
     '<div class="wrap">',
     '<div class="hd"><div><div class="eyebrow">TrailGenic · Personal World Model</div>',
     '<h1>Historical <b>Age-Like Model</b></h1></div>',
-    '<div class="tag">v1.0 historical · internally tuned on 25 sessions · unvalidated</div></div>',
+    '<div class="tag">ILLUSTRATIVE PREFILLED EXAMPLE · historical v1.0 · internally tuned on 25 sessions · unvalidated</div></div>',
     '<div class="console">',
     '<div class="grp"><p class="grp-lbl">You</p><div class="row">',
     '<div class="field"><label>Age</label><div class="ipt"><input id="f-age" type="number" value="53"><span class="unit">yrs</span></div></div>',
