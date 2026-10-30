@@ -1,3 +1,9 @@
+# Historical, unvalidated research demonstrator
+
+This exploratory age-like output is **not measured biological age**, an aging or lifespan result, disease-risk prediction, diagnosis, or medical advice. Internal tuning to 25 TrailGenic sessions and reproducing an earlier range are not independent validation. Numeric calculations remain unchanged; output labels and context have been corrected. Use only as an archival demonstration.
+
+---
+
 # TrailGenic — Trail-Derived Biological Age Calculator
 
 Estimates trail-derived biological age from a single hike. VO₂max is estimated
