@@ -18,6 +18,9 @@ test('historical model preserves computation and rejects invalid observations', 
   assert.ok(result.lo < result.hi);
   assert.ok(M.validate({ ...sample, dist: 0 }).errors.includes('distance'));
   assert.ok(M.validate({ ...sample, ahr: 70, rhr: 70 }).errors.includes('average HR above resting'));
+  const lowEffort = M.validate({ ...sample, ahr: 80 });
+  assert.match(lowEffort.warning, /Historical model limitation/);
+  assert.doesNotMatch(lowEffort.warning, /Bio-age needs/);
 });
 
 test('the historical widget renders the result and revised warning, without claiming age reversal', () => {
